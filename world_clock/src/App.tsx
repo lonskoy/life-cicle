@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import './App.css';
 import { Clock } from './components/Clock';
+import { TClock } from './types';
 
 export default function App() {
-  const [clocks, setClocks]= useState<React.ReactNode[]>([]);
+  const [clocks, setClocks]= useState<TClock[]>([]);
   const [countryName, setCountryName] = useState('');
   const [timezone, setTimezone] = useState(0);
 
   const addClock = () => {
+    const newClock = {
+      id: Date.now(),
+      country: countryName,
+      timeZone: timezone 
+    }
     const newId = Date.now(); // Генерируем уникальный идентификатор
-    setClocks([...clocks, <Clock key={newId} onRemove={() => removeClock(newId)} country={countryName} timezone={timezone} />]);
+      setClocks([...clocks, newClock]);
     console.log('Добавлены часы с id :' +  newId)
   };
 
   const removeClock = (id: number) => {
-    setClocks(clocks.filter((clock) => clock.key !== id));
+    setClocks(clocks.filter((clock) => clock.id !== id));
     console.log("Удалены часы с id: " + id)
   };
 
@@ -26,7 +32,11 @@ export default function App() {
         <button onClick={addClock}>Add</button>
       </div>
 
-      {clocks}
+      {clocks.map(elem => {
+        return(
+          <Clock onRemove={removeClock} country={elem.country} timezone={elem.timeZone}  id={elem.id}/>
+        ) 
+      })}
     </div>
   );
 }

@@ -1,3 +1,5 @@
-export type Clocks = {
-    const [clocks, setClocks]: React.ReactElement[];
+export type TClock = {
+      id: number,
+      country: string,
+      timeZone: number 
 }

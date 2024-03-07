@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import '../App.css';
 
-export const Clock = ({ onRemove, country, timezone  }) => {
+export const Clock = ({ onRemove, id, country, timezone }: {onRemove: (id: number) => void , id: number, country: string, timezone: number} ) => {
     const [time, setTime] = useState(new Date(new Date().getTime() + timezone * 60 * 60 * 1000));
 
   setInterval(() => {
@@ -22,7 +22,7 @@ export const Clock = ({ onRemove, country, timezone  }) => {
 
   return (
     <div className="clock">
-        <button onClick={onRemove} className="remove-button">X</button>
+        <button onClick={() => onRemove(id)} className="remove-button">X</button>
         <div className="country">{country}</div>
         <div className="hand hour" style={hourStyle}></div>
         <div className="hand minute" style={minuteStyle}></div>
